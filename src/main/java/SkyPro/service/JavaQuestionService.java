@@ -33,7 +33,9 @@ public class JavaQuestionService implements QuestionService {
     }
 
     public Question getRandomQuestion() {
-
-        return repository.getAll().stream().findFirst().orElse(null);
+        return repository.getAll().stream()
+                .skip(new Random().nextInt(repository.getAll().size()))
+                .findFirst()
+                .orElse(null);
     }
 }

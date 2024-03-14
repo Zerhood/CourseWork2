@@ -2,7 +2,8 @@ package SkyPro.service;
 
 import SkyPro.dto.Question;
 import SkyPro.exceptions.LargeNumberOfQuestionsException;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -13,18 +14,15 @@ import java.util.Set;
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
 
-    private QuestionService math;
-
-    private QuestionService java;
-
-    public ExaminerServiceImpl(@Qualifier("mathQuestionService") QuestionService math,
-                               @Qualifier("javaQuestionService") QuestionService java) {
-        this.math = math;
-        this.java = java;
+    @Autowired
+    private ApplicationContext context;
+    public ExaminerServiceImpl() {
     }
 
     @Override
     public Collection<Question> getQuestions(int amount) {
+        JavaQuestionService java = context.getBean(JavaQuestionService.class);
+        MathQuestionService math = new MathQuestionService();
         Set<Question> questions = new HashSet<>();
         if (java.getAll().size() < amount) {
             throw new LargeNumberOfQuestionsException("Количество вопросов меньше!");
