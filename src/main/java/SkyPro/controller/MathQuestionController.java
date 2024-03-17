@@ -24,17 +24,17 @@ public class MathQuestionController {
     @GetMapping("/add")
     public Question addQuestion(@RequestParam(value = "question", required = false) String question,
                                 @RequestParam(value = "answer", required = false) String answer) {
-        throw new MethodNotAllowedException("метода не существует!");
+        return questionService.add(question, answer);
     }
 
     @GetMapping
     public Collection<Question> getQuestions() {
-        throw new MethodNotAllowedException("метода не существует!");
+        return questionService.getAll();
     }
 
     @GetMapping("/remove")
     public Question removeQuestion(@RequestParam(value = "question", required = false) String question,
                                    @RequestParam(value = "answer", required = false) String answer) {
-        throw new MethodNotAllowedException("метода не существует!");
+        return questionService.remove(new Question(question, answer));
     }
 }

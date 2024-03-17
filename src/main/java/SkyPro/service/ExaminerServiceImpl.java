@@ -2,28 +2,32 @@ package SkyPro.service;
 
 import SkyPro.dto.Question;
 import SkyPro.exceptions.LargeNumberOfQuestionsException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
 
-    @Autowired
-    private ApplicationContext context;
-    public ExaminerServiceImpl() {
+    List<QuestionService> serviceList;
+
+    public ExaminerServiceImpl(List<QuestionService> serviceList) {
+        this.serviceList = serviceList;
     }
 
     @Override
     public Collection<Question> getQuestions(int amount) {
-        JavaQuestionService java = context.getBean(JavaQuestionService.class);
-        MathQuestionService math = new MathQuestionService();
+        JavaQuestionService java = (JavaQuestionService) serviceList.stream()
+                .filter(s -> s instanceof JavaQuestionService)
+                .findFirst()
+                .get();
+        MathQuestionService math = (MathQuestionService) serviceList.stream()
+                .filter(s -> s instanceof MathQuestionService)
+                .findFirst()
+                .get();
+
         Set<Question> questions = new HashSet<>();
+
         if (java.getAll().size() < amount) {
             throw new LargeNumberOfQuestionsException("Количество вопросов меньше!");
         }

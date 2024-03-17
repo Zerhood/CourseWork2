@@ -16,8 +16,7 @@ public class JavaQuestionService implements QuestionService {
     }
 
     public Question add(String q, String a) {
-        Question question = new Question(q, a);
-        return repository.add(question);
+        return repository.add(new Question(q, a));
     }
 
     public Question add(Question question) {

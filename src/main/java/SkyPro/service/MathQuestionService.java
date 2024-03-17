@@ -1,6 +1,7 @@
 package SkyPro.service;
 
 import SkyPro.dto.Question;
+import SkyPro.exceptions.MethodNotAllowedException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -10,19 +11,19 @@ import java.util.Random;
 public class MathQuestionService implements QuestionService {
 
     public Question add(String q, String a) {
-        return null;
+        throw new MethodNotAllowedException("Метода не существует!");
     }
 
     public Question add(Question question) {
-        return null;
+        throw new MethodNotAllowedException("Метода не существует!");
     }
 
     public Question remove(Question question) {
-        return null;
+        throw new MethodNotAllowedException("Метода не существует!");
     }
 
     public Collection<Question> getAll() {
-        return null;
+        throw new MethodNotAllowedException("Метода не существует!");
     }
 
     public Question getRandomQuestion() {
